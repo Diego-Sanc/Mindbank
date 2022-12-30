@@ -49,7 +49,4 @@ public class LoanAplicationDTO {
         this.toAccountNumber = toAccountNumber;
     }
 
-    public boolean validate(){
-        return !(loanId == null || amount == null || amount <= 0 || payments == null || toAccountNumber.isEmpty());
-    }
 }

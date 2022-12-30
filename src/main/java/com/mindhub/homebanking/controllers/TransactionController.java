@@ -4,34 +4,33 @@ import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.CardType;
 import com.mindhub.homebanking.models.Client;
 import com.mindhub.homebanking.models.Transaction;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
-import com.mindhub.homebanking.repositories.TransactionRepository;
+import com.mindhub.homebanking.services.AccountService;
+import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api")
 public class TransactionController {
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
 
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
     @Transactional
     @RequestMapping(value = "/transactions", method = RequestMethod.POST)
@@ -41,18 +40,12 @@ public class TransactionController {
         if (fromAccountNumber.isEmpty() || toAccountNumber.isEmpty() || amount == null || amount<=0 || description.isEmpty()){
             return new ResponseEntity<>("Todos los campos son obligatorios y el monto no puede ser cero o negativo", HttpStatus.FORBIDDEN);
         }
-        Client client = clientRepository.findByEmail(authentication.getName());
-        Optional<Account> optAccountFrom = accountRepository.findByNumber(fromAccountNumber);
-        Optional<Account> optAccountTo = accountRepository.findByNumber(toAccountNumber);
-        Account accountFrom;
-        Account accountTo;
+        Client client = clientService.getClientByEmail(authentication.getName());
+        Account accountFrom = accountService.getAccountByNumber(fromAccountNumber);
+        Account accountTo = accountService.getAccountByNumber(toAccountNumber);
 
-        if (optAccountFrom.isEmpty() || optAccountTo.isEmpty()){
+        if (accountFrom == null || accountTo == null){
             return new ResponseEntity<>("Cuenta erronea, por favor verifica los datos.", HttpStatus.FORBIDDEN);
-        }
-        else {
-            accountFrom = optAccountFrom.get();
-            accountTo = optAccountTo.get();
         }
 
         if (accountFrom.equals(accountTo)){
@@ -71,16 +64,16 @@ public class TransactionController {
 
         Transaction transactionCredit = new Transaction(CardType.CREDIT, amount, description +" - "+ accountFrom.getNumber(), LocalDateTime.now());
 
-        transactionDebit.setAccount(accountFrom);
-        transactionCredit.setAccount(accountTo);
+        transactionService.setTransactionToAccount(transactionDebit, accountFrom);
+        transactionService.setTransactionToAccount(transactionCredit, accountTo);
 
         accountFrom.setBalance(accountFrom.getBalance()-amount);
         accountTo.setBalance(accountTo.getBalance()+amount);
 
-        accountRepository.save(accountFrom);
-        accountRepository.save(accountTo);
-        transactionRepository.save(transactionDebit);
-        transactionRepository.save(transactionCredit);
+        accountService.saveAccount(accountFrom);
+        accountService.saveAccount(accountTo);
+        transactionService.saveTransaction(transactionCredit);
+        transactionService.saveTransaction(transactionDebit);
 
         return new ResponseEntity<>("Fondos transferidos", HttpStatus.CREATED);
     }
