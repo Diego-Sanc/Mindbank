@@ -39,6 +39,9 @@ var app = new Vue({
         }
     },
     mounted: function(){
+        if (this.clientInfo.verified){
+            window.location.href=""
+        }
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
         this.getData();
     }

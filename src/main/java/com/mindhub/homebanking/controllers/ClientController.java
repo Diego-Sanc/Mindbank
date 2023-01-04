@@ -3,8 +3,11 @@ package com.mindhub.homebanking.controllers;
 import com.mindhub.homebanking.dtos.ClientDTO;
 import com.mindhub.homebanking.models.Account;
 import com.mindhub.homebanking.models.Client;
+import com.mindhub.homebanking.models.DynamicPin;
 import com.mindhub.homebanking.services.AccountService;
 import com.mindhub.homebanking.services.ClientService;
+import com.mindhub.homebanking.services.DynamicPinService;
+import com.mindhub.homebanking.services.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -26,7 +29,15 @@ public class ClientController {
     private ClientService clientService;
 
     @Autowired
-    private AccountService appService;
+    private AccountService accountService;
+
+    @Autowired
+    private DynamicPinService dynamicPinService;
+
+    @Autowired
+    private UtilService utilService;
+
+    @Autowired
 
     @RequestMapping(value = "/clients")
     public List<ClientDTO> getClients(){
@@ -46,8 +57,11 @@ public class ClientController {
         }
         Client client = new Client(firstName,lastName,passwordEncoder.encode(password),email);
         client = clientService.saveClient(client);
-        Account account = appService.createAccount(appService.randomAccNumber());
-        appService.setAccountToClient(account, client);
+        Account account = accountService.createAccount(accountService.randomAccNumber());
+        accountService.setAccountToClient(account, client);
+        DynamicPin dynamicPin = dynamicPinService.createDynaPin(dynamicPinService.randomDynaPin());
+        dynamicPinService.setDynaPinToClient(dynamicPin, client);
+        dynamicPinService.saveDynaPin(dynamicPin);
         return new ResponseEntity<>(HttpStatus.CREATED);
 
     }
@@ -58,6 +72,8 @@ public class ClientController {
 
         return new ClientDTO(client);
     }
+
+
 
 
 

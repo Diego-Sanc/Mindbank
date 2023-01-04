@@ -65,3 +65,17 @@
 .index-container{
     margin-top: 10%;
 }
+
+.round-time-bar {
+}
+
+.round-time-bar div {
+  height: 10px;
+  width: calc(80% * var(--duration)/60);
+}
+.bg-red{
+    background: linear-gradient(to bottom, red, #900);
+}
+.bg-green{
+    background: linear-gradient(to bottom, #00FF00, green );
+}

@@ -55,6 +55,12 @@
                                     Loans
                                 </a>
                             </li>
+                            <li>
+                                <a href="/web/dynamic-password.html" class="nav-link link-dark">
+                                    <i class="bi bi-key"></i>
+                                    Dynamic PIN
+                                </a>
+                            </li>
                         </ul>
                         <hr>
                         <ul class="nav nav-pills flex-column mb-auto">
@@ -105,6 +111,10 @@
                                     <div class="col-md">
                                         <label for="description" class="form-label">Description</label>
                                         <input id="description" v-model="description" type="text" class="form-control" placeholder="Rent payment" aria-label="to account">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <label for="dynaPIN" class="form-label">Dynamic PIN</label>
+                                        <input id="dynaPIN" v-model="dynaPIN" type="text" class="form-control" placeholder="000000" aria-label="to account">
                                     </div>
                                 </div>
                                 <button type="button" v-on:click="checkTransfer" class="btn btn-sm btn-outline-success mt-4">transfer</button>

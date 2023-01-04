@@ -1,0 +1,60 @@
+var app = new Vue({
+    el:"#app",
+    data:{
+        dynaPIN: "{'000000', 60}",  //{ pin , timeLeft}
+        barTimer: null,
+        getDataTimer: null,
+        errorToats: null,
+        errorMsg: null,
+    },
+
+    methods:{
+        getData: function(){
+            axios.get("/api/clients/current/dynaPIN")
+                .then((response) => {
+                    //get client ifo
+                    this.dynaPIN = response.data;
+                    })
+                .catch((error)=>{
+                // handle error
+                this.errorMsg = "Error getting data";
+                this.errorToats.show();
+                })
+
+            },
+        signOut: function(){
+                    axios.post('/api/logout')
+                    .then(response => window.location.href="/web/index.html")
+                    .catch(() =>{
+                        this.errorMsg = "Sign out failed";
+                        this.errorToats.show();
+            })
+        },
+        timer: function(){
+            if (this.dynaPIN != null && this.dynaPIN.timeLeft>0) this.dynaPIN.timeLeft-=1;
+        }
+    },
+    computed: {
+        cssProps() {
+
+              return {
+                '--duration': this.dynaPIN.timeLeft
+              }
+            }
+
+    },
+    mounted: function(){
+        this.getData();
+        this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
+    },
+    updated: function(){
+
+        if (this.dynaPIN != null && this.dynaPIN.timeLeft>0){
+        clearInterval(this.getDataTimer);
+        this.getDataTimer = setInterval(this.getData,this.dynaPIN.timeLeft*1000);
+        clearInterval(this.barTimer);
+        this.barTimer = setInterval(this.timer,1000);
+        }
+
+    }
+})

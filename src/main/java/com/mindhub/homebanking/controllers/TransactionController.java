@@ -35,7 +35,8 @@ public class TransactionController {
     @Transactional
     @RequestMapping(value = "/transactions", method = RequestMethod.POST)
     public ResponseEntity<Object> transfer(@RequestParam String fromAccountNumber, @RequestParam String toAccountNumber,
-                                           @RequestParam Double amount, @RequestParam String description, Authentication authentication){
+                                           @RequestParam Double amount, @RequestParam String description,
+                                           @RequestParam String dynaPIN, Authentication authentication){
 
         if (fromAccountNumber.isEmpty() || toAccountNumber.isEmpty() || amount == null || amount<=0 || description.isEmpty()){
             return new ResponseEntity<>("Todos los campos son obligatorios y el monto no puede ser cero o negativo", HttpStatus.FORBIDDEN);
@@ -58,6 +59,10 @@ public class TransactionController {
 
         if (accountFrom.getBalance()<= amount){
             return new ResponseEntity<>("Cuenta sin fondos",HttpStatus.FORBIDDEN);
+        }
+
+        if (!client.getDynamicPin().getPin().equals(dynaPIN)){
+            return new ResponseEntity<>("Clave dinámica erronea", HttpStatus.FORBIDDEN);
         }
 
         Transaction transactionDebit = new Transaction(CardType.DEBIT, -amount, description +" - "+ accountTo.getNumber(), LocalDateTime.now());

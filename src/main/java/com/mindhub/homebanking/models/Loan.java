@@ -9,11 +9,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
+@Table(name = "loans")
 public class Loan {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO,generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;

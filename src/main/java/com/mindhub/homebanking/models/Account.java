@@ -9,11 +9,11 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@Table(name = "accounts")
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native", strategy = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String number;
@@ -84,18 +84,6 @@ public class Account {
 
     public void setTransactions(Set<Transaction> transactions) {
         this.transactions = transactions;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        Account account = (Account) o;
-        return id.equals(account.id) && number.equals(account.number) && creationDate.equals(account.creationDate) && balance.equals(account.balance) && client.equals(account.client);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, number, creationDate, balance, client, transactions);
     }
 
     public void addTransaction(Transaction transaction){
