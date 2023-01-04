@@ -18,7 +18,7 @@ var app = new Vue({
                 }
             }
             axios.post('/api/login',`email=${this.email}&password=${this.password}`,config)
-                .then(response => window.location.href="http://localhost:8080/web/index.html")
+                .then(response => window.location.href="http://localhost:8080/web/accounts.html")
                 .catch(() =>{
                     this.errorMsg = "Sign in failed, check the information"
                     this.errorToats.show();
