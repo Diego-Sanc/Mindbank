@@ -19,6 +19,7 @@ public class WebAuthorization extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeRequests()
+                .antMatchers("/rest/**").hasAuthority("ADMIN")
                 .antMatchers("/web/index.html","/web/js/**","/web/css/**","/web/img/**","/api/login","/api/logout").permitAll()
                 .antMatchers(HttpMethod.POST,"/api/clients").permitAll()
                 .anyRequest().authenticated();

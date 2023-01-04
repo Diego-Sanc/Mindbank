@@ -1,7 +1,6 @@
 package com.mindhub.homebanking.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,11 +9,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
+@Table(name = "clients")
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
-    @GenericGenerator(name = "native",strategy = "native")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String firstName;
@@ -24,6 +23,9 @@ public class Client {
     private String email;
 
     private String password;
+
+    @OneToOne(mappedBy = "client",fetch = FetchType.EAGER)
+    private DynamicPin dynamicPin = null;
 
     @OneToMany(mappedBy="client", fetch=FetchType.EAGER)
     private Set<Account> accounts = new HashSet<>();
@@ -104,6 +106,14 @@ public class Client {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public DynamicPin getDynamicPin() {
+        return dynamicPin;
+    }
+
+    public void setDynamicPin(DynamicPin dynamicPin) {
+        this.dynamicPin = dynamicPin;
     }
 
     public String getFullName(){

@@ -10,7 +10,8 @@ var app = new Vue({
         accountToNumber: "VIN",
         trasnferType: "own",
         amount: 0,
-        description: ""
+        description: "",
+        dynaPIN: 0,
     },
     methods:{
         getData: function(){
@@ -52,7 +53,7 @@ var app = new Vue({
                     'content-type': 'application/x-www-form-urlencoded'
                 }
             }
-            axios.post(`/api/transactions?fromAccountNumber=${this.accountFromNumber}&toAccountNumber=${this.accountToNumber}&amount=${this.amount}&description=${this.description}`,config)
+            axios.post(`/api/transactions?fromAccountNumber=${this.accountFromNumber}&toAccountNumber=${this.accountToNumber}&amount=${this.amount}&description=${this.description}&dynaPIN=${this.dynaPIN}`,config)
             .then(response => { 
                 this.modal.hide();
                 this.okmodal.show();

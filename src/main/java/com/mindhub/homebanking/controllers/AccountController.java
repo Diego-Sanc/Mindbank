@@ -48,6 +48,7 @@ public class AccountController {
     public ResponseEntity<Object> createAccount(Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
 
+
         if (client.getAccounts().size()>=3){
             return new ResponseEntity<>("Max number of accounts reached", HttpStatus.FORBIDDEN);
         }
