@@ -155,10 +155,11 @@ public class Client {
         cards.add(card);
     }
 
-    public void addAdvance(CashAdvance advance){
+    public void addAdvance(CashAdvance advance) {
         advance.setClient(this);
         advances.add(advance);
-
+    }
+    
     public String getCodVerficacion() {
         return codVerficacion;
     }
