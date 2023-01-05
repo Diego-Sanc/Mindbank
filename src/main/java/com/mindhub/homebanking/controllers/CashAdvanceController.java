@@ -77,9 +77,9 @@ public class CashAdvanceController {
                 cashAdvanceApplicationDTO.getPayments(), LocalDateTime.now(), hiddenNumber,
                 account.getNumber(),client);
         cashAdvanceService.saveCashAdvance(cashAdvance);
-        card.setAmount(Math.floor(card.getAmount()-cashAdvanceApplicationDTO.getAmount()*1.1));
+        card.setAmount(card.getAmount()-Math.floor(cashAdvanceApplicationDTO.getAmount()*1.1));
         cardService.saveCard(card);
-        Transaction advance = new Transaction(CardType.CREDIT,cashAdvanceApplicati  onDTO.getAmount(),hiddenNumber + " cash advance approved ",
+        Transaction advance = new Transaction(CardType.CREDIT,cashAdvanceApplicationDTO.getAmount(),hiddenNumber + " cash advance approved ",
                 LocalDateTime.now());
         transactionService.setTransactionToAccount(advance,account);
         transactionService.saveTransaction(advance);

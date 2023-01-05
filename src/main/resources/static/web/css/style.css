@@ -46,6 +46,7 @@
 .advance{
     background: linear-gradient(45deg,#FFEA00,#FFAA33);
     color: white;
+    margin: 5px;
 }
 
 .menu-logo{
