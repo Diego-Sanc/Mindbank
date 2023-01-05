@@ -42,6 +42,9 @@ public class CashAdvanceController {
     public ResponseEntity<Object> requestCash (@RequestBody CashAdvanceApplicationDTO cashAdvanceApplicationDTO,
                                                Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
+        if (!client.isEstadoCuenta()){
+            return new ResponseEntity<>("Cuenta no verificada", HttpStatus.FORBIDDEN);
+        }
         if (cashAdvanceApplicationDTO.getAmount()==null || cashAdvanceApplicationDTO.getPayments()==null ||
                 cashAdvanceApplicationDTO.getAccountFinal().isEmpty() || cashAdvanceApplicationDTO.getCardId()==null){
             return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);

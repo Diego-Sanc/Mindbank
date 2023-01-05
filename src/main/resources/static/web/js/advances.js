@@ -13,6 +13,17 @@ var app = new Vue({
         fees: []
     },
     methods:{
+        verifyUser: function(){
+            axios.get("/api/verification")
+                .then((response) => {
+                    if (response.data!="verified") window.location.href="http://localhost:8080/web/verificacion-code.html";
+                })
+                .catch(() =>{
+                    this.errorMsg = "Error Verifying";
+                    this.errorToats.show();
+                    //window.location.href="/web/accounts.html";
+                })
+        },
         getData: function(){
             Promise.all([axios.get("/api/clients/current/creditCards"),axios.get("/api/clients/current/accounts")])
             .then((response) => {
@@ -81,6 +92,7 @@ var app = new Vue({
         },
     },
     mounted: function(){
+        this.verifyUser();
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
         this.modal = new bootstrap.Modal(document.getElementById('confirModal'));
         this.okmodal = new bootstrap.Modal(document.getElementById('okModal'));

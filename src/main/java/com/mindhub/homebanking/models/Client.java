@@ -159,7 +159,7 @@ public class Client {
         advance.setClient(this);
         advances.add(advance);
     }
-    
+
     public String getCodVerficacion() {
         return codVerficacion;
     }
