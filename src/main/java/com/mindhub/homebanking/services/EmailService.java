@@ -16,10 +16,10 @@ public class EmailService {
     public void sendEmail(String to, String subject, String body)throws MessagingException
     {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("fco.20mochi@gmail.com");
+        message.setTo(to);
         message.setFrom("mindBanc@outlook.com");
-        message.setSubject("Mensaje de Prueba Banco MindBanc");
-        message.setText("Mensaje de prueba no responder");
+        message.setSubject(subject);
+        message.setText(body);
 
         mailSender.send(message);
     }
