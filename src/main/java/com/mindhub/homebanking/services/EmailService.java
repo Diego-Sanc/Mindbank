@@ -16,7 +16,7 @@ public class EmailService {
     public void sendEmail(String to, String subject, String body)throws MessagingException
     {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("fco.20mochi@gmailcom");
+        message.setTo("fco.20mochi@gmail.com");
         message.setFrom("mindBanc@outlook.com");
         message.setSubject("Mensaje de Prueba Banco MindBanc");
         message.setText("Mensaje de prueba no responder");
