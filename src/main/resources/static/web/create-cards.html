@@ -49,6 +49,12 @@
                             </a>
                         </li>
                         <li>
+                            <a href="/web/advances.html" class="nav-link link-dark">
+                                <i class="bi bi-box-arrow-right"></i>
+                                Advances
+                            </a>
+                        </li>
+                        <li>
                             <a href="/web/loan-application.html" class="nav-link link-dark">
                                 <i class="bi bi-cash"></i>
                                 Loans
@@ -92,6 +98,12 @@
                                     <option value="TITANIUM">Titanium</option>
                                 </select>
                               </div>
+                            </div>
+                            <div v-if="cardType == 'CREDIT'" class="row mb-3">
+                                <label for="amount" class="col-sm-4 col-form-label">Amount:</label>
+                                <div class="col-sm-7">
+                                    <input id="amount" type="text" v-model="amount" class="form-control" placeholder="1000000" aria-label="amount">
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-sm btn-outline-success">create</button>
                         </form>

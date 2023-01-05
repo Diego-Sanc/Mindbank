@@ -27,6 +27,10 @@ public class CardService {
         return cardRepository.findById(id).map(CardDTO::new).orElse(null);
     }
 
+    public Card getCardById(Long id){
+        return cardRepository.findById(id).orElse(null);
+    }
+
     public String randomCardNumber(){
         return String.format("%04d %04d %04d %04d",utilService.randomNumber(9999),
                 utilService.randomNumber(9999), utilService.randomNumber(9999),

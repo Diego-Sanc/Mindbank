@@ -83,11 +83,11 @@ public class HomeBankingApplication {
 			clientLoanService.saveClientLoan(loan3);
 			clientLoanService.saveClientLoan(loan4);
 			Card card1 = new Card(melba.getFullName(),CardType.DEBIT,CardColor.GOLD,
-					cardService.randomCardNumber(), cardService.randomCvv(), LocalDateTime.now().plusYears(5),LocalDateTime.now());
+					cardService.randomCardNumber(), cardService.randomCvv(), LocalDateTime.now().plusYears(5),LocalDateTime.now(),0.0);
 			Card card2 = new Card(melba.getFullName(),CardType.CREDIT,CardColor.TITANIUM,
-					cardService.randomCardNumber(),cardService.randomCvv(),LocalDateTime.now().plusYears(5),LocalDateTime.now());
+					cardService.randomCardNumber(),cardService.randomCvv(),LocalDateTime.now().plusYears(5),LocalDateTime.now(),1000000.0);
 			Card card3 = new Card(jose.getFullName(),CardType.CREDIT,CardColor.SILVER,
-					cardService.randomCardNumber(),cardService.randomCvv(),LocalDateTime.now().plusYears(5),LocalDateTime.now());
+					cardService.randomCardNumber(),cardService.randomCvv(),LocalDateTime.now().plusYears(5),LocalDateTime.now(),500000.0);
 			melba.addCard(card1);
 			melba.addCard(card2);
 			jose.addCard(card3);

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "dynamicpasswords")
+@Table(name = "dynamic_pins")
 public class DynamicPin {
 
     @Id

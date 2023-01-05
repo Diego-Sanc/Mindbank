@@ -16,6 +16,7 @@ public class ClientDTO {
     List<AccountDTO> accounts;
     List<ClientLoanDTO> loans;
     List<CardDTO> cards;
+    private List<CashAdvanceDTO> advances;
 
     public ClientDTO(Client client) {
         this.id = client.getId();
@@ -26,6 +27,7 @@ public class ClientDTO {
         this.accounts = client.getAccounts().stream().map(AccountDTO::new).collect(Collectors.toList());
         this.loans = client.getClientLoans().stream().map(ClientLoanDTO::new).collect(Collectors.toList());
         this.cards = client.getCards().stream().map(CardDTO::new).collect(Collectors.toList());
+        this.advances = client.getAdvances().stream().map(CashAdvanceDTO::new).collect(Collectors.toList());
     }
 
     public Long getId() {
@@ -90,5 +92,13 @@ public class ClientDTO {
 
     public void setCards(List<CardDTO> cards) {
         this.cards = cards;
+    }
+
+    public List<CashAdvanceDTO> getAdvances() {
+        return advances;
+    }
+
+    public void setAdvances(List<CashAdvanceDTO> advances) {
+        this.advances = advances;
     }
 }

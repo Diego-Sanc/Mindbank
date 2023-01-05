@@ -1,5 +1,6 @@
 package com.mindhub.homebanking.controllers;
 
+import com.mindhub.homebanking.dtos.CardDTO;
 import com.mindhub.homebanking.models.Card;
 import com.mindhub.homebanking.models.CardColor;
 import com.mindhub.homebanking.models.CardType;
@@ -16,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -27,8 +31,21 @@ public class CardController {
     @Autowired
     ClientService clientService;
 
+    @RequestMapping(value = "/clients/current/cards")
+    public List<CardDTO> getCards(Authentication authentication){
+        Client client = clientService.getClientByEmail(authentication.getName());
+        return client.getCards().stream().map(CardDTO::new).collect(Collectors.toList());
+    }
+    @RequestMapping(value = "/clients/current/creditCards")
+    public List<CardDTO> getCreditCards(Authentication authentication){
+        Client client = clientService.getClientByEmail(authentication.getName());
+        return client.getCards().stream().filter(card -> card.getType().equals(CardType.CREDIT)).map(CardDTO::new).collect(Collectors.toList());
+    }
+
+
     @RequestMapping(value = "/clients/current/cards", method = RequestMethod.POST)
-    public ResponseEntity<Object> createCard(@RequestParam CardColor cardColor, @RequestParam CardType cardType, Authentication authentication){
+    public ResponseEntity<Object> createCard(@RequestParam CardColor cardColor, @RequestParam CardType cardType,
+                                             @RequestParam(required = false) Double amount, Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
 
         if (!client.isEstadoCuenta()){
@@ -42,7 +59,13 @@ public class CardController {
 
             String cardCvv = cardService.randomCvv();
 
-            Card card = new Card(client.getFullName(), cardType, cardColor, cardNumber, cardCvv,LocalDateTime.now().plusYears(5), LocalDateTime.now());
+            if (cardType.equals(CardType.DEBIT)){
+                amount = 0.00;
+            } else if (amount==null || amount<= 0 || amount>1000000) {
+                return new ResponseEntity<>("El monto es inválido o supera $1.000.000", HttpStatus.FORBIDDEN);
+            }
+
+            Card card = new Card(client.getFullName(), cardType, cardColor, cardNumber, cardCvv,LocalDateTime.now().plusYears(5), LocalDateTime.now(), amount);
 
             cardService.setCardToClient(card, client);
 

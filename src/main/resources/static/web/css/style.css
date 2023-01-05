@@ -1,11 +1,23 @@
-.account{
-    background: linear-gradient(45deg,#ee0979,#ff6a00);
+.card{
     color: white;
     box-shadow: 1px 1px 5px black;
 }
 
-.account:hover{
+.card:hover {
     box-shadow: 2px 2px 10px black;
+}
+
+.account{
+    background: linear-gradient(45deg,#ee0979,#ff6a00);
+}
+
+.loan{
+    background: linear-gradient(45deg,#ee09cf,#0026ff);
+}
+
+.advance{
+    background: linear-gradient(45deg,#FFEA00,#FFAA33);
+    margin: 5px;
 }
 
 .account-details-header{
@@ -38,10 +50,7 @@
     color: red;
 }
 
-.loan{
-    background: linear-gradient(45deg,#ee09cf,#0026ff);
-    color: white;
-}
+
 
 .menu-logo{
     width: 150px;
