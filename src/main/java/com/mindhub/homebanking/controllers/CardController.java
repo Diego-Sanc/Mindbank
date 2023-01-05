@@ -31,6 +31,9 @@ public class CardController {
     public ResponseEntity<Object> createCard(@RequestParam CardColor cardColor, @RequestParam CardType cardType, Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
 
+        if (!client.isEstadoCuenta()){
+            return new ResponseEntity<>("Cuenta no verificada", HttpStatus.FORBIDDEN);
+        }
         if (client.getCards().stream().filter(card -> card.getType() == cardType).count()>=3){
             return new ResponseEntity<>("Max number of "+cardType+" cards reached", HttpStatus.FORBIDDEN);
         }

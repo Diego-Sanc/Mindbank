@@ -7,6 +7,17 @@ var app = new Vue({
         cardColor:"none",
     },
     methods:{
+        verifyUser: function(){
+            axios.get("/api/verification")
+                .then((response) => {
+                    if (response.data!="verified") window.location.href="http://localhost:8080/web/verificacion-code.html";
+                })
+                .catch(() =>{
+                    this.errorMsg = "Error Verifying";
+                    this.errorToats.show();
+                    //window.location.href="/web/accounts.html";
+                })
+        },
         formatDate: function(date){
             return new Date(date).toLocaleDateString('en-gb');
         },
@@ -39,6 +50,7 @@ var app = new Vue({
         }
     },
     mounted: function(){
+        this.verifyUser();
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
     }
 })
