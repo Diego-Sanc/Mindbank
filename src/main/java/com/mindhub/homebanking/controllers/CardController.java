@@ -48,6 +48,9 @@ public class CardController {
                                              @RequestParam(required = false) Double amount, Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
 
+        if (!client.isEstadoCuenta()){
+            return new ResponseEntity<>("Cuenta no verificada", HttpStatus.FORBIDDEN);
+        }
         if (client.getCards().stream().filter(card -> card.getType() == cardType).count()>=3){
             return new ResponseEntity<>("Max number of "+cardType+" cards reached", HttpStatus.FORBIDDEN);
         }

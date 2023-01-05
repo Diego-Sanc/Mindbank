@@ -47,7 +47,9 @@ public class AccountController {
     @RequestMapping(value = "/clients/current/accounts", method = RequestMethod.POST)
     public ResponseEntity<Object> createAccount(Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
-
+        if (!client.isEstadoCuenta()){
+            return new ResponseEntity<>("Cuenta no verificada", HttpStatus.FORBIDDEN);
+        }
 
         if (client.getAccounts().size()>=3){
             return new ResponseEntity<>("Max number of accounts reached", HttpStatus.FORBIDDEN);

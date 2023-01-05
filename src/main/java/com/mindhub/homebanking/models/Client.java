@@ -23,6 +23,8 @@ public class Client {
     private String email;
 
     private String password;
+    private String codVerficacion;
+    private boolean estadoCuenta;
 
     @OneToOne(mappedBy = "client",fetch = FetchType.EAGER)
     private DynamicPin dynamicPin = null;
@@ -41,11 +43,13 @@ public class Client {
 
     public Client() { }
 
-    public Client(String firstName, String lastName, String password, String email) {
+    public Client(String firstName, String lastName, String password, String email,String codVerficacion,boolean estadoCuenta) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.codVerficacion = codVerficacion;
+        this.estadoCuenta= estadoCuenta;
     }
     public Long getId() {
         return id;
@@ -154,5 +158,20 @@ public class Client {
     public void addAdvance(CashAdvance advance){
         advance.setClient(this);
         advances.add(advance);
+
+    public String getCodVerficacion() {
+        return codVerficacion;
+    }
+
+    public void setCodVerficacion(String codVerficacion) {
+        this.codVerficacion = codVerficacion;
+    }
+
+    public boolean isEstadoCuenta() {
+        return estadoCuenta;
+    }
+
+    public void setEstadoCuenta(boolean estadoCuenta) {
+        this.estadoCuenta = estadoCuenta;
     }
 }
