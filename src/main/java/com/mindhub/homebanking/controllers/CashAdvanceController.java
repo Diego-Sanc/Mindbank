@@ -53,8 +53,8 @@ public class CashAdvanceController {
         if(!client.getCards().contains(card)){
             return new ResponseEntity<>("La tarjeta no pertenece al cliente", HttpStatus.FORBIDDEN);
         }
-        if(cashAdvanceApplicationDTO.getAmount() > card.getAmount()){
-            return new ResponseEntity<>("Monto solicitado excede el máximo", HttpStatus.FORBIDDEN);
+        if(cashAdvanceApplicationDTO.getAmount()*1.1 > card.getAmount()){
+            return new ResponseEntity<>("El costo del avance excede el cupo de la tarjeta", HttpStatus.FORBIDDEN);
         }
         if(card.getType().equals(CardType.DEBIT)){
             return new ResponseEntity<>("Tarjeta debe ser de crédito", HttpStatus.FORBIDDEN);
@@ -79,7 +79,7 @@ public class CashAdvanceController {
         cashAdvanceService.saveCashAdvance(cashAdvance);
         card.setAmount(Math.floor(card.getAmount()-cashAdvanceApplicationDTO.getAmount()*1.1));
         cardService.saveCard(card);
-        Transaction advance = new Transaction(CardType.CREDIT,cashAdvanceApplicationDTO.getAmount(),hiddenNumber + " cash advance approved ",
+        Transaction advance = new Transaction(CardType.CREDIT,cashAdvanceApplicati  onDTO.getAmount(),hiddenNumber + " cash advance approved ",
                 LocalDateTime.now());
         transactionService.setTransactionToAccount(advance,account);
         transactionService.saveTransaction(advance);
