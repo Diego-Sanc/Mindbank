@@ -15,7 +15,7 @@ var app = new Vue({
     },
     methods:{
         getData: function(){
-            axios.get("/api/clients/current/accounts")
+            axios.get("/api/verification")
             .then((response) => {
                 //get client ifo
                 this.clientAccounts = response.data;
