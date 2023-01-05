@@ -36,6 +36,7 @@ public class CashAdvanceController {
     public List<CashAdvanceDTO> getAdvances (){
         return cashAdvanceService.getCashAdvancesDTO();
     }
+
     @Transactional
     @RequestMapping(path = "/advances", method = RequestMethod.POST)
     public ResponseEntity<Object> requestCash (@RequestBody CashAdvanceApplicationDTO cashAdvanceApplicationDTO,
@@ -72,11 +73,11 @@ public class CashAdvanceController {
             return new ResponseEntity<>("N° de cuotas inválido", HttpStatus.FORBIDDEN);
         }
         String hiddenNumber = String.format("XXXX XXXX XXXX %s",card.getNumber().substring(card.getNumber().length()-4));
-        CashAdvance cashAdvance = new CashAdvance(cashAdvanceApplicationDTO.getAmount()*1.1,
+        CashAdvance cashAdvance = new CashAdvance(Math.floor(cashAdvanceApplicationDTO.getAmount()*1.1),
                 cashAdvanceApplicationDTO.getPayments(), LocalDateTime.now(), hiddenNumber,
                 account.getNumber(),client);
         cashAdvanceService.saveCashAdvance(cashAdvance);
-        card.setAmount(card.getAmount()-cashAdvanceApplicationDTO.getAmount()*1.1);
+        card.setAmount(Math.floor(card.getAmount()-cashAdvanceApplicationDTO.getAmount()*1.1));
         cardService.saveCard(card);
         Transaction advance = new Transaction(CardType.CREDIT,cashAdvanceApplicationDTO.getAmount(),hiddenNumber + " cash advance approved ",
                 LocalDateTime.now());

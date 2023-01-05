@@ -115,6 +115,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="row mt-3">
+                    <div class="col">
+                        <h2 class="display-6">Cash Advances</h2>
+                        <span class="small" v-if="clientInfo.advances != null && clientInfo.advances.length <= 0">No Cash Advances</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div v-for="advance in clientInfo.advances" class="col-12 col-md-3 mt-2">
+                        <div class="card border-0 advance">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ advance.accountInitial }}</h5>
+                                <p class="card-text"> destination: {{ advance.accountFinal}}</p>
+                                <p class="card-text"> payments: {{ advance.payments}}</p>
+                                <p class="text-center lead account-balance"> ${{ advance.amount }} </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

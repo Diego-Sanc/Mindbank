@@ -24,6 +24,8 @@ public class CardDTO {
 
     private LocalDateTime fromDate;
 
+    private Double amount;
+
     public CardDTO(Card card) {
         this.id = card.getId();
         this.cardHolder = card.getCardHolder();
@@ -33,6 +35,7 @@ public class CardDTO {
         this.cvv = card.getCvv();
         this.thruDate = card.getThruDate();
         this.fromDate = card.getFromDate();
+        this.amount = card.getAmount();
     }
 
     public Long getId() {
@@ -97,5 +100,13 @@ public class CardDTO {
 
     public void setFromDate(LocalDateTime fromDate) {
         this.fromDate = fromDate;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 }
