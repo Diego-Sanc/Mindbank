@@ -28,7 +28,8 @@ public class CardController {
     ClientService clientService;
 
     @RequestMapping(value = "/clients/current/cards", method = RequestMethod.POST)
-    public ResponseEntity<Object> createCard(@RequestParam CardColor cardColor, @RequestParam CardType cardType, Authentication authentication){
+    public ResponseEntity<Object> createCard(@RequestParam CardColor cardColor, @RequestParam CardType cardType,
+                                             @RequestParam(required = false) Double amount, Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
 
         if (client.getCards().stream().filter(card -> card.getType() == cardType).count()>=3){
@@ -39,7 +40,13 @@ public class CardController {
 
             String cardCvv = cardService.randomCvv();
 
-            Card card = new Card(client.getFullName(), cardType, cardColor, cardNumber, cardCvv,LocalDateTime.now().plusYears(5), LocalDateTime.now());
+            if (cardType.equals(CardType.DEBIT)){
+                amount = 0.00;
+            } else if (amount<= 0 || amount>1000000) {
+                return new ResponseEntity<>("El monto es inválido o supera $1.000.000", HttpStatus.FORBIDDEN);
+            }
+
+            Card card = new Card(client.getFullName(), cardType, cardColor, cardNumber, cardCvv,LocalDateTime.now().plusYears(5), LocalDateTime.now(), amount);
 
             cardService.setCardToClient(card, client);
 

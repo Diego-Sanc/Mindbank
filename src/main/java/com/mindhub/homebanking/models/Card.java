@@ -27,6 +27,8 @@ public class Card {
 
     private LocalDateTime fromDate;
 
+    private Double amount;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
     private Client client;
@@ -34,7 +36,7 @@ public class Card {
     public Card() {
     }
 
-    public Card(String cardHolder,CardType type, CardColor color, String number, String cvv, LocalDateTime thruDate, LocalDateTime fromDate) {
+    public Card(String cardHolder,CardType type, CardColor color, String number, String cvv, LocalDateTime thruDate, LocalDateTime fromDate,Double amount) {
         this.cardHolder = cardHolder;
         this.type = type;
         this.color = color;
@@ -42,6 +44,7 @@ public class Card {
         this.cvv = cvv;
         this.thruDate = thruDate;
         this.fromDate = fromDate;
+        this.amount = amount;
     }
 
     public Long getId() {
@@ -114,5 +117,13 @@ public class Card {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 }

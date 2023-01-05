@@ -1,6 +1,6 @@
 package com.mindhub.homebanking.dtos;
 
-public class LoanAplicationDTO {
+public class LoanApplicationDTO {
 
     private Long loanId;
 
@@ -10,7 +10,7 @@ public class LoanAplicationDTO {
 
     private String toAccountNumber;
 
-    public LoanAplicationDTO(Long loanId, Integer amount, Integer payments, String toAccountNumber) {
+    public LoanApplicationDTO(Long loanId, Integer amount, Integer payments, String toAccountNumber) {
         this.loanId = loanId;
         this.amount = amount;
         this.payments = payments;

@@ -1,6 +1,6 @@
 package com.mindhub.homebanking.controllers;
 
-import com.mindhub.homebanking.dtos.LoanAplicationDTO;
+import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.services.*;
@@ -40,7 +40,7 @@ public class LoanController {
 
     @Transactional
     @RequestMapping(value = "/loans", method = RequestMethod.POST)
-    public ResponseEntity<Object> createLoan(@RequestBody LoanAplicationDTO loanData, Authentication authentication){
+    public ResponseEntity<Object> createLoan(@RequestBody LoanApplicationDTO loanData, Authentication authentication){
 
         Client client = clientService.getClientByEmail(authentication.getName());
         Loan loan = loanService.getLoanById(loanData.getLoanId());

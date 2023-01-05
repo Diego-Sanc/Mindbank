@@ -1,6 +1,6 @@
 package com.mindhub.homebanking.services;
 
-import com.mindhub.homebanking.dtos.LoanAplicationDTO;
+import com.mindhub.homebanking.dtos.LoanApplicationDTO;
 import com.mindhub.homebanking.dtos.LoanDTO;
 import com.mindhub.homebanking.models.Loan;
 import com.mindhub.homebanking.repositories.LoanRepository;
@@ -23,7 +23,7 @@ public class LoanService {
         return loanRepository.findById(id).orElse(null);
     }
 
-    public boolean validateLoan(LoanAplicationDTO loan){
+    public boolean validateLoan(LoanApplicationDTO loan){
         return !(loan.getLoanId() == null || loan.getAmount() == null || loan.getAmount() <= 0 || loan.getPayments() == null || loan.getToAccountNumber().isEmpty());
     }
 

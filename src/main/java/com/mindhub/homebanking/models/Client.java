@@ -36,6 +36,9 @@ public class Client {
     @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
     private Set<Card> cards = new HashSet<>();
 
+    @OneToMany(mappedBy = "client", fetch = FetchType.EAGER)
+    Set<CashAdvance> advances = new HashSet<>();
+
     public Client() { }
 
     public Client(String firstName, String lastName, String password, String email) {
@@ -116,6 +119,14 @@ public class Client {
         this.dynamicPin = dynamicPin;
     }
 
+    public Set<CashAdvance> getAdvances() {
+        return advances;
+    }
+
+    public void setAdvances(Set<CashAdvance> advances) {
+        this.advances = advances;
+    }
+
     public String getFullName(){
         return firstName + " " + lastName;
     }
@@ -138,5 +149,10 @@ public class Client {
     public void addCard(Card card){
         card.setClient(this);
         cards.add(card);
+    }
+
+    public void addAdvance(CashAdvance advance){
+        advance.setClient(this);
+        advances.add(advance);
     }
 }
