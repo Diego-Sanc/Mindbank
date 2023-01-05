@@ -18,7 +18,13 @@ var app = new Vue({
                 }
             }
             axios.post('/api/login',`email=${this.email}&password=${this.password}`,config)
-                .then(response => window.location.href="http://localhost:8080/web/verificacion-code.html")
+                .then(response => {
+                    axios.get("/api/verification")
+                        .then((response) => {
+                            if (response.data=="verified") window.location.href="/web/accounts.html"
+                            else window.location.href="http://localhost:8080/web/verificacion-code.html";
+                        })
+                })
                 .catch(() =>{
                     this.errorMsg = "Sign in failed, check the information"
                     this.errorToats.show();

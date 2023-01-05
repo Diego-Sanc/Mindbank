@@ -10,17 +10,26 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class VerificationController {
+
     @Autowired
     private ClientService clientService;
+
     @RequestMapping("/verification")
-    public boolean checkStatus(Authentication authentication){
+    public String checkStatus(Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
-        return client.isEstadoCuenta();
+        if (client.isEstadoCuenta()){
+            return "verified";
+        }
+        else {
+            return "notVerified";
+        }
     }
+
     @RequestMapping(value = "/verification",method = RequestMethod.POST)
     public ResponseEntity<Object> verify(@RequestParam String codVerify,Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());

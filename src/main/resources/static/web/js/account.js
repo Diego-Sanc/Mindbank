@@ -6,6 +6,17 @@ var app = new Vue({
         errorMsg: null,
     },
     methods:{
+        verifyUser: function(){
+            axios.get("/api/verification")
+                .then((response) => {
+                    if (response.data!="verified") window.location.href="http://localhost:8080/web/verificacion-code.html";
+                })
+                .catch(() =>{
+                    this.errorMsg = "Error Verifying";
+                    this.errorToats.show();
+                    //window.location.href="/web/accounts.html";
+                })
+        },
         getData: function(){
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get('id');
@@ -34,6 +45,7 @@ var app = new Vue({
         },
     },
     mounted: function(){
+        this.verifyUser();
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
         this.getData();
     }

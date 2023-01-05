@@ -9,6 +9,17 @@ var app = new Vue({
     },
 
     methods:{
+        verifyUser: function(){
+            axios.get("/api/verification")
+                .then((response) => {
+                    if (response.data!="verified") window.location.href="http://localhost:8080/web/verificacion-code.html";
+                })
+                .catch(() =>{
+                    this.errorMsg = "Error Verifying";
+                    this.errorToats.show();
+                    //window.location.href="/web/accounts.html";
+                })
+        },
         getData: function(){
             axios.get("/api/clients/current/dynaPIN")
                 .then((response) => {
@@ -44,6 +55,7 @@ var app = new Vue({
 
     },
     mounted: function(){
+        this.verifyUser();
         this.getData();
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
     },

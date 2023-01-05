@@ -46,6 +46,9 @@ public class LoanController {
         Loan loan = loanService.getLoanById(loanData.getLoanId());
         Account account = accountService.getAccountByNumber(loanData.getToAccountNumber());
 
+        if (!client.isEstadoCuenta()){
+            return new ResponseEntity<>("Cuenta no verificada", HttpStatus.FORBIDDEN);
+        }
         if (!loanService.validateLoan(loanData)){
             return new ResponseEntity<>("Todos los campos son obligatorios y el monto no puede ser cero ni negativo", HttpStatus.FORBIDDEN);
         }

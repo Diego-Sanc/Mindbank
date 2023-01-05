@@ -45,6 +45,9 @@ public class TransactionController {
         Account accountFrom = accountService.getAccountByNumber(fromAccountNumber);
         Account accountTo = accountService.getAccountByNumber(toAccountNumber);
 
+        if (!client.isEstadoCuenta()){
+            return new ResponseEntity<>("Cuenta no verificada", HttpStatus.FORBIDDEN);
+        }
         if (accountFrom == null || accountTo == null){
             return new ResponseEntity<>("Cuenta erronea, por favor verifica los datos.", HttpStatus.FORBIDDEN);
         }
