@@ -25,6 +25,9 @@ var app = new Vue({
                 .then((response) => {
                     //get client ifo
                     this.dynaPIN = response.data;
+                    console.log("data extraida")
+                    clearInterval(this.getDataTimer);
+                    this.getDataTimer = setInterval(this.getData,this.dynaPIN.timeLeft*1000);
                     })
                 .catch((error)=>{
                 // handle error
@@ -58,15 +61,11 @@ var app = new Vue({
         this.verifyUser();
         this.getData();
         this.errorToats = new bootstrap.Toast(document.getElementById('danger-toast'));
+        this.barTimer = setInterval(this.timer,1000);
     },
     updated: function(){
 
-        if (this.dynaPIN != null && this.dynaPIN.timeLeft>0){
-        clearInterval(this.getDataTimer);
-        this.getDataTimer = setInterval(this.getData,this.dynaPIN.timeLeft*1000);
-        clearInterval(this.barTimer);
-        this.barTimer = setInterval(this.timer,1000);
-        }
+
 
     }
 })
