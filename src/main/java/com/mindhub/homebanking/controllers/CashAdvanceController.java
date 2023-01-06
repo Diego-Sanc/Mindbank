@@ -9,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,13 +29,13 @@ public class CashAdvanceController {
     private TransactionService transactionService;
 
 
-    @RequestMapping(path = "/advances")
+    @GetMapping(path = "/advances")
     public List<CashAdvanceDTO> getAdvances (){
         return cashAdvanceService.getCashAdvancesDTO();
     }
 
     @Transactional
-    @RequestMapping(path = "/advances", method = RequestMethod.POST)
+    @PostMapping(path = "/advances")
     public ResponseEntity<Object> requestCash (@RequestBody CashAdvanceApplicationDTO cashAdvanceApplicationDTO,
                                                Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());

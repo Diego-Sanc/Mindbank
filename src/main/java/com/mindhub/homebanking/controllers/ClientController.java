@@ -38,13 +38,13 @@ public class ClientController {
     @Autowired
     private EmailService emailService;
 
-    @RequestMapping(value = "/clients")
+    @GetMapping(value = "/clients")
     public List<ClientDTO> getClients(){
         return clientService.getClientsDTO();
         //List<Client> --> List<ClientDTO>
     }
 
-    @RequestMapping(value = "/clients", method = RequestMethod.POST)
+    @PostMapping(value = "/clients")
     public ResponseEntity<Object> register(@RequestParam String firstName, @RequestParam String lastName,
                                            @RequestParam String email, @RequestParam String password){
 
@@ -71,7 +71,7 @@ public class ClientController {
 
     }
 
-    @RequestMapping("/clients/current")
+    @GetMapping("/clients/current")
     public ClientDTO getClient(Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
 

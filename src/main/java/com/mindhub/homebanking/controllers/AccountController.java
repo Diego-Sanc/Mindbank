@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,22 +26,22 @@ public class AccountController {
     @Autowired
     private ClientService clientService;
 
-    @RequestMapping(value = "/accounts")
+    @GetMapping(value = "/accounts")
     public List<AccountDTO> getAccounts(){
         return accountService.getAccountsDTO();
     }
 
-    @RequestMapping(value = "/accounts/{accountId}")
+    @GetMapping(value = "/accounts/{accountId}")
     public AccountDTO getAccountById(@PathVariable Long accountId){
         return accountService.getAccountDTOById(accountId);
     }
-    @RequestMapping(value = "/clients/current/accounts")
+    @GetMapping(value = "/clients/current/accounts")
     public List<AccountDTO> getClientAccounts(Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
         return client.getAccounts().stream().map(AccountDTO::new).collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "/clients/current/accounts", method = RequestMethod.POST)
+    @PostMapping(value = "/clients/current/accounts")
     public ResponseEntity<Object> createAccount(Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
         if (!client.isEstadoCuenta()){

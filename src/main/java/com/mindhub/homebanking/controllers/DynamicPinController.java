@@ -7,6 +7,7 @@ import com.mindhub.homebanking.services.ClientService;
 import com.mindhub.homebanking.services.DynamicPinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,7 +24,7 @@ public class DynamicPinController {
     @Autowired
     private DynamicPinService dynamicPinService;
 
-    @RequestMapping("/clients/current/dynaPIN")
+    @GetMapping("/clients/current/dynaPIN")
     public DynaPinDetailDTO getClientDynaPIN(Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
         DynamicPin dynamicPin = client.getDynamicPin();

@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,19 +28,19 @@ public class CardController {
     @Autowired
     ClientService clientService;
 
-    @RequestMapping(value = "/clients/current/cards")
+    @GetMapping(value = "/clients/current/cards")
     public List<CardDTO> getCards(Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
         return client.getCards().stream().map(CardDTO::new).collect(Collectors.toList());
     }
-    @RequestMapping(value = "/clients/current/creditCards")
+    @GetMapping(value = "/clients/current/creditCards")
     public List<CardDTO> getCreditCards(Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
         return client.getCards().stream().filter(card -> card.getType().equals(CardType.CREDIT)).map(CardDTO::new).collect(Collectors.toList());
     }
 
 
-    @RequestMapping(value = "/clients/current/cards", method = RequestMethod.POST)
+    @PostMapping(value = "/clients/current/cards")
     public ResponseEntity<Object> createCard(@RequestParam CardColor cardColor, @RequestParam CardType cardType,
                                              @RequestParam(required = false) Double amount, Authentication authentication){
         Client client = clientService.getClientByEmail(authentication.getName());
