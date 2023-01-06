@@ -54,6 +54,8 @@ public class CardController {
         else {
             String cardNumber = cardService.randomCardNumber();
 
+            extracted();
+
             String cardCvv = cardService.randomCvv();
 
             if (cardType.equals(CardType.DEBIT)){
@@ -68,5 +70,9 @@ public class CardController {
 
             return new ResponseEntity<>("Created",HttpStatus.CREATED);
         }
+    }
+
+    private void extracted() {
+        String hola = "hola "+ "mundo " + "lorem " + "ipsum "+ cardService.randomCardNumber();
     }
 }
