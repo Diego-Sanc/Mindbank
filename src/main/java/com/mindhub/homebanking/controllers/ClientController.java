@@ -63,7 +63,7 @@ public class ClientController {
         dynamicPinService.setDynaPinToClient(dynamicPin, client);
         dynamicPinService.saveDynaPin(dynamicPin);
         try {
-            emailService.sendEmail(email,"Codigo Verificacion",codVerificador);
+            emailService.sendEmail(email,"Codigo Verificacion","Su codigo de verificacion es :" + " "+codVerificador);
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
