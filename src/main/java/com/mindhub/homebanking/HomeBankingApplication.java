@@ -68,9 +68,9 @@ public class HomeBankingApplication {
 			transactionService.saveTransaction(trx003);
 			transactionService.saveTransaction(trx004);
 			transactionService.saveTransaction(trx005);
-			Loan hipotecario = new Loan("Hipotecario",500000, List.of(12,24,36,48,60));
-			Loan personal = new Loan("Personal",100000, List.of(6,12,24));
-			Loan automotriz = new Loan("Automotriz",300000, List.of(6,12,24,36));
+			Loan hipotecario = new Loan("Hipotecario",500000, List.of(12,24,36,48,60), 0.2);
+			Loan personal = new Loan("Personal",100000, List.of(6,12,24), 0.15);
+			Loan automotriz = new Loan("Automotriz",300000, List.of(6,12,24,36), 0.12);
 			loanService.saveLoan(hipotecario);
 			loanService.saveLoan(personal);
 			loanService.saveLoan(automotriz);

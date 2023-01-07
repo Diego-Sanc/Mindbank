@@ -73,7 +73,7 @@ public class LoanController {
             return new ResponseEntity<>("Cuenta origen no pertenece a este usuario.", HttpStatus.FORBIDDEN);
         }
 
-        ClientLoan clientLoan = new ClientLoan(client,loan,(int) (loanData.getAmount()*1.2), loanData.getPayments());
+        ClientLoan clientLoan = new ClientLoan(client,loan,(int) (loanData.getAmount()*(1.0 + loan.getInterest())), loanData.getPayments());
         Transaction transaction = new Transaction(CardType.CREDIT, loanData.getAmount()*1.0, loan.getName() +" - loan approved", LocalDateTime.now(), account.getBalance()+loanData.getAmount());
 
         transactionService.setTransactionToAccount(transaction,account);

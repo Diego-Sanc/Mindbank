@@ -78,10 +78,12 @@ var app = new Vue({
         },
         checkFees: function(){
             this.fees = [];
-            this.totalLoan = parseInt(this.amount) + (this.amount * 0.2);
+            if (this.loanTypeId > 0) {
+            this.totalLoan = parseInt(this.amount) + (this.amount * this.loanTypes[this.loanTypeId-1].interest);
             let amount = this.totalLoan / this.payments;
             for(let i = 1; i <= this.payments; i++){
                 this.fees.push({ amount: amount });
+            }
             }
             this.feesmodal.show();
         },

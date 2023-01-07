@@ -20,6 +20,8 @@ public class Loan {
 
     private Integer maxAmount;
 
+    private Double interest;
+
     @ElementCollection
     @Column(name = "payment")
     private List<Integer> payments;
@@ -30,10 +32,11 @@ public class Loan {
     public Loan() {
     }
 
-    public Loan(String name, Integer maxAmount, List<Integer> payments) {
+    public Loan(String name, Integer maxAmount, List<Integer> payments, Double interest) {
         this.name = name;
         this.maxAmount = maxAmount;
         this.payments = payments;
+        this.interest = interest;
     }
 
     public Long getId() {
@@ -74,6 +77,14 @@ public class Loan {
 
     public void setClientLoans(Set<ClientLoan> clientLoans) {
         this.clientLoans = clientLoans;
+    }
+
+    public Double getInterest() {
+        return interest;
+    }
+
+    public void setInterest(Double interest) {
+        this.interest = interest;
     }
 
     public void addClientLoan(ClientLoan clientLoan){
