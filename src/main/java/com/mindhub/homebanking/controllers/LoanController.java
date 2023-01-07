@@ -74,7 +74,7 @@ public class LoanController {
         }
 
         ClientLoan clientLoan = new ClientLoan(client,loan,(int) (loanData.getAmount()*1.2), loanData.getPayments());
-        Transaction transaction = new Transaction(CardType.CREDIT, loanData.getAmount()*1.0, loan.getName() +" - loan approved", LocalDateTime.now());
+        Transaction transaction = new Transaction(CardType.CREDIT, loanData.getAmount()*1.0, loan.getName() +" - loan approved", LocalDateTime.now(), account.getBalance()+loanData.getAmount());
 
         transactionService.setTransactionToAccount(transaction,account);
         account.setBalance(account.getBalance()+loanData.getAmount());

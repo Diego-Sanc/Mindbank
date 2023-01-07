@@ -65,9 +65,9 @@ public class TransactionController {
             return new ResponseEntity<>("Clave dinámica erronea", HttpStatus.FORBIDDEN);
         }
 
-        Transaction transactionDebit = new Transaction(CardType.DEBIT, -amount, description +" - "+ accountTo.getNumber(), LocalDateTime.now());
+        Transaction transactionDebit = new Transaction(CardType.DEBIT, -amount, description +" - "+ accountTo.getNumber(), LocalDateTime.now(), accountFrom.getBalance()-amount);
 
-        Transaction transactionCredit = new Transaction(CardType.CREDIT, amount, description +" - "+ accountFrom.getNumber(), LocalDateTime.now());
+        Transaction transactionCredit = new Transaction(CardType.CREDIT, amount, description +" - "+ accountFrom.getNumber(), LocalDateTime.now(), accountTo.getBalance()+amount);
 
         transactionService.setTransactionToAccount(transactionDebit, accountFrom);
         transactionService.setTransactionToAccount(transactionCredit, accountTo);

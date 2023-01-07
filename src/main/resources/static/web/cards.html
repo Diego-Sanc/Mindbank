@@ -93,6 +93,7 @@
                             <div v-bind:class="['plastic-card__front', 'plastic-card__part', card.color.toLowerCase() +'-plastic-card']">
                                 <div class="plastic-card__square">
                                     <span class="plastic-card__label">{{ card.type}} {{ card.color }}</span>
+                                    <span v-if="today>new Date(card.thruDate).getTime()" class="rounded p-2 bg-danger text-light">Expired</span>
                                 </div>
                                 <img class="plastic-card__front-logo plastic-card__logo"
                                     src="img/logo_vinotinto.png">
@@ -115,6 +116,7 @@
                                     </div>
                                     <div class="plastic-card__back-square plastic-card__square">
                                         <span class="plastic-card__label">{{ card.type}} {{ card.color }}</span>
+                                        <button class="btn btn-sm btn-outline-danger" v-on:click="deleteCard(card.id)">Delete</button>
                                     </div>
                                     <img class="plastic-card__back-logo plastic-card__logo"
                                         src="img/logo_vinotinto.png">
@@ -133,6 +135,7 @@
                             <div v-bind:class="['plastic-card__front', 'plastic-card__part', card.color.toLowerCase() +'-plastic-card']">
                                 <div class="plastic-card__square">
                                     <span class="plastic-card__label">{{ card.type}} {{ card.color }}</span>
+                                    <span v-if="today>new Date(card.thruDate).getTime()" class="rounded p-2 bg-danger text-light">Expired</span>
                                 </div>
                                 <img class="plastic-card__front-logo plastic-card__logo"
                                     src="img/logo_vinotinto.png">
@@ -155,6 +158,7 @@
                                     </div>
                                     <div class="plastic-card__back-square plastic-card__square">
                                         <span class="plastic-card__label">{{ card.type}} {{ card.color }}</span>
+                                        <button v-if="clientInfo.advances.length==0" class="btn btn-sm btn-outline-danger" v-on:click="deleteCard(card.id)">Delete</button>
                                     </div>
                                     <img class="plastic-card__back-logo plastic-card__logo"
                                         src="img/logo_vinotinto.png">

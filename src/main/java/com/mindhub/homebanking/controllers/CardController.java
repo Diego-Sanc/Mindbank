@@ -72,6 +72,23 @@ public class CardController {
         }
     }
 
+    @DeleteMapping(value = "/clients/current/cards")
+    public ResponseEntity<Object> deleteCard(@RequestParam Long id, Authentication authentication){
+        Client client = clientService.getClientByEmail(authentication.getName());
+        Card card = cardService.getCardById(id);
+        if (card == null){
+            return new ResponseEntity<>("La tarjeta no existe",HttpStatus.FORBIDDEN);
+        }
+        if (!client.getCards().contains(card)){
+            return new ResponseEntity<>("La tarjeta no pertenece a este cliente",HttpStatus.FORBIDDEN);
+        }
+        if (card.getType().equals(CardType.CREDIT) && client.getAdvances().size()>0){
+            return new ResponseEntity<>("No puede eliminar tarjetas de credito luego de haber solicitado un avance en efectivo", HttpStatus.FORBIDDEN);
+        }
+        cardService.deleteCard(card);
+        return new ResponseEntity<>("Card deleted", HttpStatus.OK);
+    }
+
     private void extracted() {
         String hola = "hola "+ "mundo " + "lorem " + "ipsum "+ cardService.randomCardNumber();
     }

@@ -59,6 +59,9 @@ public class CashAdvanceController {
         if(card.getType().equals(CardType.DEBIT)){
             return new ResponseEntity<>("Tarjeta debe ser de crédito", HttpStatus.FORBIDDEN);
         }
+        if(LocalDateTime.now().isAfter(card.getThruDate())){
+            return new ResponseEntity<>("Tarjeta Expirada",HttpStatus.FORBIDDEN);
+        }
         Account account = accountService.getAccountByNumber(cashAdvanceApplicationDTO.getAccountFinal());
         if(account==null){
             return new ResponseEntity<>("Cuenta destino no existe", HttpStatus.FORBIDDEN);
@@ -80,7 +83,7 @@ public class CashAdvanceController {
         card.setAmount(card.getAmount()-Math.floor(cashAdvanceApplicationDTO.getAmount()*1.1));
         cardService.saveCard(card);
         Transaction advance = new Transaction(CardType.CREDIT,cashAdvanceApplicationDTO.getAmount(),hiddenNumber + " cash advance approved ",
-                LocalDateTime.now());
+                LocalDateTime.now(), account.getBalance()+cashAdvanceApplicationDTO.getAmount());
         transactionService.setTransactionToAccount(advance,account);
         transactionService.saveTransaction(advance);
 

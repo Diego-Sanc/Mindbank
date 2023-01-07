@@ -53,11 +53,11 @@ public class HomeBankingApplication {
 			accountService.saveAccount(vin002);
 			accountService.saveAccount(vin003);
 			accountService.saveAccount(vin004);
-			Transaction trx001 = new Transaction(CardType.CREDIT,3000.0,"Hola Mundo",LocalDateTime.now());
-			Transaction trx002 = new Transaction(CardType.DEBIT,-6000.0,"Lorem Ipsum",LocalDateTime.now());
-			Transaction trx003 = new Transaction(CardType.CREDIT,10000.0,"Curso Mindhub",LocalDateTime.now());
-			Transaction trx004 = new Transaction(CardType.DEBIT,-3000.0,"Compras Navidad",LocalDateTime.now());
-			Transaction trx005 = new Transaction(CardType.CREDIT,15000.0,"Compras Steam",LocalDateTime.now());
+			Transaction trx001 = new Transaction(CardType.CREDIT,3000.0,"Hola Mundo",LocalDateTime.now(), 5000.0);
+			Transaction trx002 = new Transaction(CardType.DEBIT,-6000.0,"Lorem Ipsum",LocalDateTime.now(), 10500.0);
+			Transaction trx003 = new Transaction(CardType.CREDIT,8500.0,"Curso Mindhub",LocalDateTime.now(),8500.0);
+			Transaction trx004 = new Transaction(CardType.DEBIT,-3000.0,"Compras Navidad",LocalDateTime.now(), 7500.0);
+			Transaction trx005 = new Transaction(CardType.CREDIT,1500.0,"Compras Steam",LocalDateTime.now(),10000.0);
 			vin001.addTransaction(trx001);
 			vin002.addTransaction(trx002);
 			vin002.addTransaction(trx004);
@@ -85,15 +85,19 @@ public class HomeBankingApplication {
 			Card card1 = new Card(melba.getFullName(),CardType.DEBIT,CardColor.GOLD,
 					cardService.randomCardNumber(), cardService.randomCvv(), LocalDateTime.now().plusYears(5),LocalDateTime.now(),0.0);
 			Card card2 = new Card(melba.getFullName(),CardType.CREDIT,CardColor.TITANIUM,
-					cardService.randomCardNumber(),cardService.randomCvv(),LocalDateTime.now().plusYears(5),LocalDateTime.now(),1000000.0);
+					cardService.randomCardNumber(),cardService.randomCvv(),LocalDateTime.now().minusYears(3),LocalDateTime.now(),1000000.0);
 			Card card3 = new Card(jose.getFullName(),CardType.CREDIT,CardColor.SILVER,
 					cardService.randomCardNumber(),cardService.randomCvv(),LocalDateTime.now().plusYears(5),LocalDateTime.now(),500000.0);
+			Card card4 = new Card(melba.getFullName(),CardType.DEBIT,CardColor.SILVER,
+					cardService.randomCardNumber(),cardService.randomCvv(),LocalDateTime.now().minusYears(3),LocalDateTime.now(),500000.0);
 			melba.addCard(card1);
 			melba.addCard(card2);
 			jose.addCard(card3);
+			melba.addCard(card4);
 			cardService.saveCard(card1);
 			cardService.saveCard(card2);
 			cardService.saveCard(card3);
+			cardService.saveCard(card4);
 		};
 	}
 }

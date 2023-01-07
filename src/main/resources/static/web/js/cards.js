@@ -6,6 +6,7 @@ var app = new Vue({
         debitCards: [],
         errorToats: null,
         errorMsg: null,
+        today: new Date().getTime(),
     },
     methods:{
         verifyUser: function(){
@@ -34,6 +35,10 @@ var app = new Vue({
         },
         formatDate: function(date){
             return new Date(date).toLocaleDateString('en-gb');
+        },
+        deleteCard: function(id){
+            axios.delete(`/api/clients/current/cards?id=${id}`)
+            .then((response) => this.getData())
         },
         signOut: function(){
             axios.post('/api/logout')

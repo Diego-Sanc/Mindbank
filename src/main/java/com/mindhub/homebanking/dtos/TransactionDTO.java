@@ -17,12 +17,15 @@ public class TransactionDTO {
 
     private LocalDateTime date;
 
+    private Double balance;
+
     public TransactionDTO(Transaction transaction) {
         this.id = transaction.getId();
         this.type = transaction.getType();
         this.amount = transaction.getAmount();
         this.description = transaction.getDescription();
         this.date = transaction.getDate();
+        this.balance = transaction.getBalance();
     }
 
     public Long getId() {
@@ -63,5 +66,13 @@ public class TransactionDTO {
 
     public void setDate(LocalDateTime date) {
         this.date = date;
+    }
+
+    public Double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(Double balance) {
+        this.balance = balance;
     }
 }

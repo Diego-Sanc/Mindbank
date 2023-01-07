@@ -50,4 +50,8 @@ public class CardService {
     public Card saveCard(Card card){
         return cardRepository.save(card);
     }
+
+    public void deleteCard(Card card){
+        cardRepository.delete(card);
+    }
 }
