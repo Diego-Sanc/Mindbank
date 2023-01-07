@@ -8,16 +8,16 @@
 }
 
 .account{
-    background: linear-gradient(45deg,#ee0979,#ff6a00);
+    background: linear-gradient(45deg,#0D1A40,#0F2464,#030B23);
     color: white;
 }
 
 .loan{
-    background: linear-gradient(45deg,#ee09cf,#0026ff);
+    background: linear-gradient(45deg,#434959,#5D6786,#242730);
 }
 
 .advance{
-    background: linear-gradient(45deg,#FFEA00,#FFAA33);
+    background: linear-gradient(45deg,#625E1F,#998840,#6E5E0F);
     margin: 5px;
 }
 
@@ -51,7 +51,20 @@
     color: red;
 }
 
+.nav .nav-item a.active {
+    background-color: #6178BD;
+}
 
+.btn-primary {
+    background-color: #6178BD !important;
+}
+
+.inline-margin{
+    margin-inline-start: 10px;
+}
+.btn-primary:hover {
+    background-color: #5169B1  !important;
+}
 
 .menu-logo{
     width: 100px;
@@ -59,7 +72,7 @@
 }
 
 .welcome{
-    background: linear-gradient(45deg,#ee0979,#ff6a00);
+    background: linear-gradient(45deg,#58617a,#939cb7);
 }
 
 .welcome-logo{
@@ -67,8 +80,7 @@
 }
 
 .index-body{
-    background-image: url(../img/avila.jpg);
-    background-size: cover;
+    background: linear-gradient(to top, #b5bac9, #666f88) no-repeat;
     background-attachment: fixed;
 }
 
@@ -76,16 +88,28 @@
     margin-top: 10%;
 }
 
+.main-bg{
+    background: linear-gradient(45deg,#58617a,#939cb7);
+    box-shadow: 1px 1px 5px DimGray;
+}
+
+.colored-bg{
+    background-color: #d4d7e0;
+}
+
 .round-time-bar {
 }
 
 .round-time-bar div {
-  height: 10px;
+  height: 20px;
   width: calc(80% * var(--duration)/60);
 }
 .bg-red{
     background: linear-gradient(to bottom, red, #900);
+    box-shadow: 1px 1px 5px DimGray;
 }
 .bg-green{
-    background: linear-gradient(to bottom, #00FF00, green );
+    background: linear-gradient(to bottom,#29469E  , #0F2464 );
+    box-shadow: 1px 1px 5px DimGray;
 }
+
