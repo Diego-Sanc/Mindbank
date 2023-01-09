@@ -29,7 +29,7 @@ public class HomeBankingApplication {
 									  DynamicPinService dynamicPinService) {
 		return (args) -> {
 
-			Client admin = new Client("Admin", "Admin", passwordEncoder.encode("admin"), "admin@admin.com","12345", true);
+			Client admin = new Client("Admin", "MindBank", passwordEncoder.encode("admin"), "admin@admin.com","12345", true);
 			Client melba = new Client("Melba", "Morel", passwordEncoder.encode("password"), "melba@mindhub.com","23232",true);
 			Client jose = new Client("Jose", "Lopez",passwordEncoder.encode("wordpass"),"jose@mindhub.com","32432",true);
 			clientService.saveClient(admin);
