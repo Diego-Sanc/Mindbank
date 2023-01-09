@@ -22,7 +22,7 @@ var app = new Vue({
                     axios.get("/api/verification")
                         .then((response) => {
                             if (response.data=="verified") window.location.href="/web/accounts.html"
-                            else window.location.href="http://localhost:8080/web/verificacion-code.html";
+                            else window.location.href="/web/verificacion-code.html";
                         })
                 })
                 .catch(() =>{

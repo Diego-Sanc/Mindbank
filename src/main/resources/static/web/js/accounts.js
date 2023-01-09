@@ -9,7 +9,7 @@ var app = new Vue({
         verifyUser: function(){
             axios.get("/api/verification")
                 .then((response) => {
-                    if (response.data!="verified") window.location.href="http://localhost:8080/web/verificacion-code.html";
+                    if (response.data!="verified") window.location.href="/web/verificacion-code.html";
                 })
                 .catch(() =>{
                     this.errorMsg = "Error Verifying";
@@ -41,7 +41,7 @@ var app = new Vue({
                 })
         },
         create: function(){
-            axios.post('http://localhost:8080/api/clients/current/accounts')
+            axios.post('/api/clients/current/accounts')
                 .then(response => window.location.reload())
                 .catch((error) =>{
                     this.errorMsg = error.response.data;

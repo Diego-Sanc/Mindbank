@@ -11,7 +11,7 @@ var app = new Vue({
         verifyUser: function(){
             axios.get("/api/verification")
                 .then((response) => {
-                    if (response.data!="verified") window.location.href="http://localhost:8080/web/verificacion-code.html";
+                    if (response.data!="verified") window.location.href="/web/verificacion-code.html";
                 })
                 .catch(() =>{
                     this.errorMsg = "Error Verifying";
