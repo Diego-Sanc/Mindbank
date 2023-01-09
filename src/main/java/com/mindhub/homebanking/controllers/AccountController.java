@@ -32,8 +32,13 @@ public class AccountController {
     }
 
     @GetMapping(value = "/accounts/{accountId}")
-    public AccountDTO getAccountById(@PathVariable Long accountId){
-        return accountService.getAccountDTOById(accountId);
+    public AccountDTO getAccountById(@PathVariable Long accountId, Authentication authentication){
+        Client client = clientService.getClientByEmail(authentication.getName());
+        Account account = accountService.getAccountById(accountId);
+        if (!client.getAccounts().contains(account)){
+            return null;
+        }
+        return new AccountDTO(account);
     }
     @GetMapping(value = "/clients/current/accounts")
     public List<AccountDTO> getClientAccounts(Authentication authentication){

@@ -84,7 +84,7 @@
                                         <label for="type" class="form-label">Loan types</label>
                                         <select id="type" v-model="loanTypeId" v-on:change="changedType" class="form-select" aria-label="Default select example" required>
                                             <option value="0">Open this select menu</option>
-                                            <option v-for="loanType in loanTypes" v-bind:value="loanType.id">{{ loanType.name }} | max amount: {{ loanType.maxAmount }}</option>
+                                            <option v-for="loanType in loanTypes" v-bind:value="loanType.id">{{ loanType.name }} | max amount: {{ loanType.maxAmount }} | interest: {{ loanType.interest * 100}}%</option>
                                         </select>
                                     </div>
                                     <div class="col">

@@ -29,18 +29,23 @@ public class HomeBankingApplication {
 									  DynamicPinService dynamicPinService) {
 		return (args) -> {
 
+			Client admin = new Client("Admin", "Admin", passwordEncoder.encode("admin"), "admin@admin.com","12345", true);
 			Client melba = new Client("Melba", "Morel", passwordEncoder.encode("password"), "melba@mindhub.com","23232",true);
 			Client jose = new Client("Jose", "Lopez",passwordEncoder.encode("wordpass"),"jose@mindhub.com","32432",true);
+			clientService.saveClient(admin);
 			clientService.saveClient(jose);
 			clientService.saveClient(melba);
 			DynamicPin dyna1 = new DynamicPin(dynamicPinService.randomDynaPin(),LocalDateTime.now());
 			DynamicPin dyna2 = new DynamicPin(dynamicPinService.randomDynaPin(),LocalDateTime.now());
+			DynamicPin dyna3 = new DynamicPin(dynamicPinService.randomDynaPin(),LocalDateTime.now());
 
 			dynamicPinService.saveDynaPin(dyna1);
 			dynamicPinService.saveDynaPin(dyna2);
+			dynamicPinService.saveDynaPin(dyna3);
 
 			dynamicPinService.setDynaPinToClient(dyna1, jose);
 			dynamicPinService.setDynaPinToClient(dyna2, melba);
+			dynamicPinService.setDynaPinToClient(dyna3, admin);
 			Account vin001 = new Account(accountService.randomAccNumber(), LocalDateTime.now(),5000.0);
 			Account vin002 = new Account(accountService.randomAccNumber(), LocalDateTime.now().plusDays(1),7500.0);
 			melba.addAccount(vin001);

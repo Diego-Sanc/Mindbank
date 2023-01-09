@@ -41,8 +41,13 @@ public class AccountService {
         return accountRepository.findAll().stream().map(AccountDTO::new).collect(Collectors.toList());
     }
 
+
+
     public AccountDTO getAccountDTOById(Long id){
         return accountRepository.findById(id).map(AccountDTO::new).orElse(null);
+    }
+    public Account getAccountById(Long id){
+        return accountRepository.findById(id).orElse(null);
     }
 
     public Account getAccountByNumber(String number){
